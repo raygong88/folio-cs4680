@@ -1,0 +1,8 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Folio · Assignment Planner</title><link rel="stylesheet" href="style.css"></head><body>
+<header><div class="brand"><b>F</b> Folio</div><span>Academic workspace</span></header>
+<main><div class="intro"><div><small>STUDY PLANNER</small><h1>My assignments<span>.</span></h1></div><time id="today"></time></div>
+<section class="desk"><div class="top"><h2>Planner assistant</h2><select id="mode" aria-label="Assistant mode"><option value="sample">Guided examples</option><option value="live">Live AI · Puter</option></select></div><p id="hint"></p>
+<form><label for="request">Your request</label><textarea id="request" required maxlength="1200" placeholder="Add Project proposal for CS 4680 due tomorrow."></textarea><div class="actions"><div id="chips"></div><button id="run">Run request ↗</button></div></form>
+<div class="feedback" role="status" id="status">Ready for a request.</div><div id="review" hidden><button id="yes">Confirm deletion</button> <button id="no">Keep assignment</button></div><a id="download" hidden download="assignments.csv">Download CSV ↓</a><details id="trace" hidden><summary>Inspect command</summary><pre id="json"></pre></details></section>
+<div class="columns"><section><div class="top"><h2>Assignment list</h2><button class="quiet" id="reset">Show all</button></div><div id="tasks"></div></section><section><h2>Activity log</h2><ol id="log"></ol></section></div>
+<footer>Folio / CS 4680 <a href="demo.mp4">Watch demo ↗</a></footer></main><script type="module" src="app.mjs"></script></body></html>

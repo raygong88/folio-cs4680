@@ -1,0 +1,17 @@
+import assert from 'node:assert/strict';
+import {examples,sample,execute,validate,csv,messages} from './dist/agent.mjs';
+let rows=execute([],sample(examples[0][1],[]),{newId:()=>'a1'}).rows;
+assert.equal(rows.length,1);
+assert.throws(()=>execute(rows,sample(examples[0][1],rows)));
+assert.equal(execute(rows,{action:'list',course:'cs 4680'}).matches.length,1);
+assert.equal(execute(rows,{action:'export',to:'2000-01-01'}).file,'Course,Assignment,Due date');
+assert.match(execute(rows,{action:'export'}).file,/Project proposal/);
+let del=sample(examples[3][1],rows);
+assert.equal(execute(rows,del).pending.id,'a1');
+assert.equal(execute(rows,del,{confirmedId:'other'}).rows.length,1);
+assert.equal(execute(rows,del,{confirmedId:'a1'}).rows.length,0);
+for(const bad of [{action:'delete',id:'a1',confirmed:true},{action:'add',course:'CS',title:'HW',due:'2027-02-29'},{action:'__proto__'},{action:'list',from:'2027-10-01',to:'2027-09-01'}])assert.throws(()=>validate(bad));
+assert.throws(()=>execute([],{action:'delete',id:'unknown'}));
+assert.match(csv([{course:'=formula',title:'a,"b"',due:'2027-01-01'}]),/"'=formula"/);
+assert.equal(messages('hello',rows)[0].role,'system');
+console.log('Agent regression checks passed.');
